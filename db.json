@@ -1,0 +1,33 @@
+{
+  "notes": [
+    {
+      "id": 1,
+      "note": "tarea 1",
+      "created_at": "12354987"
+    },
+    {
+      "id": 2,
+      "note": "tarea 22",
+      "category": "normal",
+      "created_at": "1254687354987"
+    },
+    {
+      "id": 3,
+      "note": "tarea 541",
+      "category": "normal",
+      "created_at": "12397954987"
+    },
+    {
+      "id": "2eea",
+      "note": "tarea tall",
+      "category": "normal",
+      "created_at": "Thu Mar 27 2025"
+    },
+    {
+      "id": "f78c",
+      "note": "primera tarea",
+      "category": "normal",
+      "created_at": "Thu Mar 27 2025"
+    }
+  ]
+}
