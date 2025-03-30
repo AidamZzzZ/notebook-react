@@ -1,15 +1,6 @@
 {
   "notes": [
     {
-      "id": "2978",
-      "note": "tareaaa",
-      "category": "job",
-      "created_at": "Sat Mar 29 2025",
-      "link": [
-        "other note"
-      ]
-    },
-    {
       "id": "e603",
       "note": "tarea",
       "category": "job",
@@ -61,10 +52,10 @@
       "created_at": "Sat Mar 29 2025"
     },
     {
-      "id": "26e1",
-      "note": "tarea sin sentido",
+      "id": "81aa",
+      "note": "tareaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
       "category": "other",
-      "created_at": "Sat Mar 29 2025"
+      "created_at": "Sun Mar 30 2025"
     }
   ]
 }
