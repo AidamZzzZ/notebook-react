@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { NoteItem, FormNote } from "./components/Notes"
 import CategoryNotes from "./components/RenderNotes"
-import axios from "axios"
+import notesServices from "./services/notes"
 
 const url = "http://localhost:3001/notes"
 
@@ -15,11 +15,11 @@ const App = () => {
   const [notes, setNotes] = useState(null)
 
   useEffect(() => {
-    axios
-      .get(url)
-      .then(response =>{ 
-        setNotes(response.data)
-        setFilteredNotes(response.data)
+    notesServices
+      .getAll(url)
+      .then(response => {
+        setNotes(response)
+        setFilteredNotes(response)
       })
   }, [])
 
@@ -44,11 +44,12 @@ const App = () => {
         created_at: date.toDateString()
       }
 
-      axios
-        .post(url, newNote)
+      notesServices
+        .created(url, newNote)
         .then(response => 
-          setNotes(notes.concat(response.data))
+          setNotes(notes.concat(response))
         )
+        .catch(error => console.log(error))
       setError('')
       setInputNote('')
       setCategoryNote('')
@@ -56,10 +57,10 @@ const App = () => {
   }
   
   const handleDeleteNote = (id) => {
-    axios
-      .delete(`${url}/${id}`)
-      .then(response => 
-        setNotes(notes.filter(note => note.id !== response.data.id))
+    notesServices
+      .deleted(`${url}/${id}`)
+      .then(response =>
+        setNotes(notes.filter(note => note.id !== response.id))
       )
       .catch(error => console.log(error))
   }
@@ -82,20 +83,13 @@ const App = () => {
         <NoteItem key={note.id} content={note.note} showDeleteButton={showButton} category={category}/>)
       return filterNotes || []
     }
-    const filterNotes = 
-    filteredNotes?.map(note => 
-      <NoteItem 
-        key={note.id} 
-        content={note.note}
-        onDeleteNote={() => handleDeleteNote(note.id)}
-        category={note.category}
-      />)
+    const filterNotes = filteredNotes?.map(note => <NoteItem key={note.id} content={note.note} onDeleteNote={() => handleDeleteNote(note.id)} category={note.category}/>)
     return filterNotes || []
   }
 
   return (
     <div className="flex text-white">
-      <div className="border-r-blue-200 border-r-1 h-screen p-3 max-w-[425px]">
+      <div className="border-r-blue-200 border-r-1 h-screen p-3 min-w-[425px]">
         <aside className="border-2 rounded-xl p-3">
           <h2 className="text-2xl font-bold">Create note</h2>
             {error && <p className="font-bold text-red-600">{error}</p>}
