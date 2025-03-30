@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { NoteItem, FormNote } from "./components/Notes"
 import CategoryNotes from "./components/RenderNotes"
-import axios from "axios"
+import notesServices from "./services/notes"
 
 const url = "http://localhost:3001/notes"
 
@@ -15,11 +15,11 @@ const App = () => {
   const [notes, setNotes] = useState(null)
 
   useEffect(() => {
-    axios
-      .get(url)
-      .then(response =>{ 
-        setNotes(response.data)
-        setFilteredNotes(response.data)
+    notesServices
+      .getAll(url)
+      .then(response => {
+        setNotes(response)
+        setFilteredNotes(response)
       })
   }, [])
 
@@ -44,11 +44,12 @@ const App = () => {
         created_at: date.toDateString()
       }
 
-      axios
-        .post(url, newNote)
+      notesServices
+        .created(url, newNote)
         .then(response => 
-          setNotes(notes.concat(response.data))
+          setNotes(notes.concat(response))
         )
+        .catch(error => console.log(error))
       setError('')
       setInputNote('')
       setCategoryNote('')
@@ -56,10 +57,10 @@ const App = () => {
   }
   
   const handleDeleteNote = (id) => {
-    axios
-      .delete(`${url}/${id}`)
-      .then(response => 
-        setNotes(notes.filter(note => note.id !== response.data.id))
+    notesServices
+      .deleted(`${url}/${id}`)
+      .then(response =>
+        setNotes(notes.filter(note => note.id !== response.id))
       )
       .catch(error => console.log(error))
   }
@@ -76,60 +77,59 @@ const App = () => {
     setCategoryNote(e.target.value)
   }
 
-  
-
   const filterCategoryNotes = (category, showButton = false) => {
     if (category) {
       const filterNotes = notes?.map(note => note.category === category && 
-        <NoteItem key={note.id} content={note.note} showDeleteButton={showButton}/>)
+        <NoteItem key={note.id} content={note.note} showDeleteButton={showButton} category={category}/>)
       return filterNotes || []
     }
-    const filterNotes = 
-    filteredNotes?.map(note => 
-      <NoteItem 
-        key={note.id} 
-        content={note.note}
-        onDeleteNote={() => handleDeleteNote(note.id)} 
-      />)
+    const filterNotes = filteredNotes?.map(note => <NoteItem key={note.id} content={note.note} onDeleteNote={() => handleDeleteNote(note.id)} category={note.category}/>)
     return filterNotes || []
   }
 
   return (
-    <>
-      <h2>Create note</h2>
-      {error && <p>{error}</p>}
-      <FormNote 
-        onSendNote={handleCreateNote} 
-        onInputNote={handleInputNote} 
-        onSelect={handleChangedCategory}
-        valueSelect={categoryNote}
-        value={inputNote} 
-        text="create"/>
+    <div className="flex text-white">
+      <div className="border-r-blue-200 border-r-1 h-screen p-3 min-w-[425px]">
+        <aside className="border-2 rounded-xl p-3">
+          <h2 className="text-2xl font-bold">Create note</h2>
+            {error && <p className="font-bold text-red-600">{error}</p>}
+            <FormNote 
+              onSendNote={handleCreateNote} 
+              onInputNote={handleInputNote} 
+              onSelect={handleChangedCategory}
+              valueSelect={categoryNote}
+              value={inputNote} 
+              text="create"/>
+        </aside>
+        <nav className="border-2 mt-2 rounded-xl p-2">
+          <h2 className="text-2xl font-bold">Search notes</h2>
+          <label htmlFor="">
+            <input className="border-b-2 outline-none" type="text" placeholder="Search a note..." onChange={handleInputSearchNote} />
+          </label>
 
-      <h2>Search notes</h2>
-      <label htmlFor="">
-        <input type="text" placeholder="Search a note..." onChange={handleInputSearchNote} />
-      </label>
-
-      <h2>{search ? "Search" : "All notes"}</h2>
-      <CategoryNotes message="No hay notas" renderList={filterCategoryNotes()}/>
-
-      <h1>My Notes</h1>
-
-      <div>
-        <CategoryNotes text="Job Notes" renderList={filterCategoryNotes("job")}/>
-
-        <CategoryNotes text="Home Notes" renderList={filterCategoryNotes("home")} />
-
-        <CategoryNotes text="Study Notes" renderList={filterCategoryNotes("study")}/>
-
-        <CategoryNotes text="Finances Notes" renderList={filterCategoryNotes("finances")}/>
-
-        <CategoryNotes text="Health Notes" renderList={filterCategoryNotes("health")}/>
-        
-        <CategoryNotes text="Other notes..." renderList={filterCategoryNotes("other")}/>
+          <h3 className="mt-2 text-2xl font-semibold">{search ? "Search" : "All notes"}</h3>
+          <CategoryNotes message="No hay notas" renderList={filterCategoryNotes()}/>
+        </nav>
       </div>
-    </>
+      <div className="p-5 w-full max-w-full">
+        <header className="mb-5">
+          <h1 className="text-6xl font-bold">My Notes</h1>
+        </header>
+        <main>
+          <CategoryNotes text="Job Notes" renderList={filterCategoryNotes("job")}/>
+
+          <CategoryNotes text="Home Notes" renderList={filterCategoryNotes("home")} />
+
+          <CategoryNotes text="Study Notes" renderList={filterCategoryNotes("study")}/>
+
+          <CategoryNotes text="Finances Notes" renderList={filterCategoryNotes("finances")}/>
+
+          <CategoryNotes text="Health Notes" renderList={filterCategoryNotes("health")}/>
+          
+          <CategoryNotes text="Other notes..." renderList={filterCategoryNotes("other")}/>
+        </main>
+      </div>
+    </div>
   )
 }
 
