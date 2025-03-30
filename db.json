@@ -1,33 +1,70 @@
 {
   "notes": [
     {
-      "id": 1,
-      "note": "tarea 1",
-      "created_at": "12354987"
+      "id": "2978",
+      "note": "tareaaa",
+      "category": "job",
+      "created_at": "Sat Mar 29 2025",
+      "link": [
+        "other note"
+      ]
     },
     {
-      "id": 2,
-      "note": "tarea 22",
-      "category": "normal",
-      "created_at": "1254687354987"
+      "id": "e603",
+      "note": "tarea",
+      "category": "job",
+      "created_at": "Sat Mar 29 2025",
+      "link": [
+        "other note"
+      ]
     },
     {
-      "id": 3,
-      "note": "tarea 541",
-      "category": "normal",
-      "created_at": "12397954987"
+      "id": "158b",
+      "note": "tarea home ",
+      "category": "home",
+      "created_at": "Sat Mar 29 2025"
     },
     {
-      "id": "2eea",
-      "note": "tarea tall",
-      "category": "normal",
-      "created_at": "Thu Mar 27 2025"
+      "id": "a0f0",
+      "note": "tarea home 2",
+      "category": "home",
+      "created_at": "Sat Mar 29 2025"
     },
     {
-      "id": "f78c",
-      "note": "primera tarea",
-      "category": "normal",
-      "created_at": "Thu Mar 27 2025"
+      "id": "3385",
+      "note": "tarea study 3",
+      "category": "study",
+      "created_at": "Sat Mar 29 2025"
+    },
+    {
+      "id": "7add",
+      "note": "tarea studyyy",
+      "category": "study",
+      "created_at": "Sat Mar 29 2025"
+    },
+    {
+      "id": "22bc",
+      "note": "finance",
+      "category": "finances",
+      "created_at": "Sat Mar 29 2025"
+    },
+    {
+      "id": "d7b3",
+      "note": "finanzasssss",
+      "category": "finances",
+      "created_at": "Sat Mar 29 2025"
+    },
+    {
+      "id": "a39a",
+      "note": "tengo que comer bien",
+      "category": "health",
+      "created_at": "Sat Mar 29 2025"
+    },
+    {
+      "id": "26e1",
+      "note": "tarea sin sentido",
+      "category": "other",
+      "created_at": "Sat Mar 29 2025"
     }
   ]
 }
