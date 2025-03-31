@@ -13,6 +13,7 @@ const App = () => {
   const [filteredNotes, setFilteredNotes] = useState([])
   const [error, setError] = useState('')
   const [notes, setNotes] = useState(null)
+  const categorys = ["job", "home", "study", "finances", "health", "other"]
 
   useEffect(() => {
     notesServices
@@ -33,10 +34,12 @@ const App = () => {
 
   const handleCreateNote = (e) => {
     e.preventDefault()
-
     if (inputNote.trim() === "" || categoryNote === "") {
+
       setError("Complete all fields correctly")
     } else {
+      e.preventDefault()
+
       const date = new Date()
       const newNote = {
         note: inputNote,
@@ -50,6 +53,7 @@ const App = () => {
           setNotes(notes.concat(response))
         )
         .catch(error => console.log(error))
+      
       setError('')
       setInputNote('')
       setCategoryNote('')
@@ -58,7 +62,7 @@ const App = () => {
   
   const handleDeleteNote = (id) => {
     notesServices
-      .deleted(`${url}/${id}`)
+      .deleted(url, id)
       .then(response =>
         setNotes(notes.filter(note => note.id !== response.id))
       )
@@ -116,17 +120,9 @@ const App = () => {
           <h1 className="text-6xl font-bold">My Notes</h1>
         </header>
         <main>
-          <CategoryNotes text="Job Notes" renderList={filterCategoryNotes("job")}/>
-
-          <CategoryNotes text="Home Notes" renderList={filterCategoryNotes("home")} />
-
-          <CategoryNotes text="Study Notes" renderList={filterCategoryNotes("study")}/>
-
-          <CategoryNotes text="Finances Notes" renderList={filterCategoryNotes("finances")}/>
-
-          <CategoryNotes text="Health Notes" renderList={filterCategoryNotes("health")}/>
-          
-          <CategoryNotes text="Other notes..." renderList={filterCategoryNotes("other")}/>
+          {categorys.map(category => 
+            <CategoryNotes text={category + " Notes"} renderList={filterCategoryNotes(category)}/>
+          )}
         </main>
       </div>
     </div>
