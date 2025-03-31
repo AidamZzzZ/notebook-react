@@ -11,7 +11,7 @@ const created = (url, newObject) => {
 }
 
 const deleted = (url, id) => {
-    const response = axios.post(`${url}/${id}`).then(response => response.data)
+    const response = axios.delete(`${url}/${id}`).then(response => response.data)
     return response
 }
 
